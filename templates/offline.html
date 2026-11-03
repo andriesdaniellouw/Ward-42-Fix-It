@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>You are offline | Ward 42 Fix-It</title>
+    <meta name="theme-color" content="#0a58ca">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- HEADER -->
+    <header class="border-bottom bg-body-tertiary py-3">
+        <div class="container">
+            <p class="h5 fw-semibold mb-0">Ward 42 Fix-It</p>
+        </div>
+    </header>
+
+    <main class="container py-4 flex-grow-1">
+        <!-- OFFLINE DETAILS -->
+        <h1>You are offline</h1>
+        <p class="lead">Your phone has no signal, or the signal is too weak to load this page</p>
+
+        <div class="alert alert-info" role="status">
+            <p id="draft-status" class="mb-0">Any report you were typing is saved on this phone. When your signal
+                returns, open REPORT A FAULT and your fault details will be filled in again. Your name and cell number
+                are not saved, please enter it again </p>
+        </div>
+
+        <!-- BUTTON -->
+        <div class="actions">
+            <button type="button" id="retry" class="btn btn-primary btn-lg">Try again</button>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-top py-3">
+        <div class="container">
+            <p class="mb-0 small">Ward 42 Fix-It System - Shared information is used to deal with your report - in line
+                with POPIA</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+
+</html>

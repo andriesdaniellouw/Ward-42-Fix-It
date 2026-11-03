@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Check Status{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <!-- HEADING -->
+        <h1>Check the status of your report</h1>
+
+
+        <!-- STATUS FORM -->
+        <form method="get" action="{{url_for('status')}}" class="mb-4">
+            <div class="mb-3">
+                <label for="ref" class="form-label">Reference number</label>
+                <input type="text" class="form-control" id="ref" name="ref" value="{{ ref or '' }}" maxlength="20"
+                    autocomplete="off" aria-describedby="ref-help" required>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">Check Status</button>
+            </div>
+        </form>
+
+        <!-- STATUS RESULTS -->
+        <section id="result" aria-labelledby="result-heading">
+            {% if report %}
+            <h2 id="result-heading" class="h4">Report: {{report.reference}}</h2>
+            <dl class="row">
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">
+                    <span
+                        class="badge {{'text-bg-danger' if report.status == 'Open' else 'text-bg-warning' if report.status == 'In Progress' else 'text-bg-success'}}">{{report.status}}</span>
+                </dd>
+                <dt class="col-sm-4">Category </dt>
+                <dd class="col-sm-8">{{report.category}}</dd>
+                <dt class="col-sm-4">Street </dt>
+                <dd class="col-sm-8">{{report.street}}</dd>
+                <dt class="col-sm-4">Reported on </dt>
+                <dd class="col-sm-8">{{report.created.strftime('%d %B %Y')}}</dd>
+            </dl>
+            {% elif ref %}
+            <h2 id="result-heading" class="visually-hidden">Result</h2>
+            <div class="alert alert-warning" role="alert">No report was found with this reference "{{ ref }}". Please
+                make sure the reference number is correct.</div>
+            {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock %}

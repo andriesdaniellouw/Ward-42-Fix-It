@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Report received{% endblock %}
+ 
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-10">
+    <h1>Thank you, your report was received</h1>
+    <p>Your reference number is:</p>
+    <p class="display-5 fw-bold" id="reference">{{ report.reference }}</p>
+    <p>Write it down or take a screenshot. You need it to check the status of your report.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="{{ url_for('status', ref=report.reference) }}">Check status now</a>
+      <a class="btn btn-outline-primary" href="{{ url_for('index') }}">Back to home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

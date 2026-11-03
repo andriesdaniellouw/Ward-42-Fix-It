@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<!--REPORTS BY STATUS-->
+<section aria-labelledby="by-status-heading" class="mb-5">
+    <h2 id="by-status-heading">Reports by Status</h2>
+    <div class="row row-cols-1 row-cols-sm-3 g-3">
+        {% for s in statuses %}
+        <div class="col">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <p class="display-5 mb-0">{{ by_status[s] }}</p>
+                    <p class="mb-0">{{ s }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- REPORTS BY CATEGORY TABLE -->
+<section aria-labelledby="by-category-heading">
+    <h2 id="by-category-heading">Reports by Category and Status</h2>
+    <!-- TABLE -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <caption>Number of reports in each category, split by status</caption>
+            <!-- HEADING -->
+            <thead>
+                <tr>
+                    <th scope="col">Category</th>
+                    {% for s in statuses %} <th scope="col" class="text-end">{{ s }}</th>{% endfor %}
+                    <th scope="col" class="text-end">Total</th>
+                </tr>
+            </thead>
+            <!-- BODY -->
+            <tbody>
+                {% for c in categories %}
+                <tr>
+                    <th scope="row">{{ c }}</th>
+                    {% for s in statuses %} <td class="text-end">{{matrix[c][s]}}</td> {% endfor %}
+                    <td class="text-end">{{ matrix[c].values()|sum }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

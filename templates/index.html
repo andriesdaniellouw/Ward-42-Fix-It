@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section aria-labelledby="hero-heading" class="row align-items-center g-4 mb-5">
+    <div class="col-12">
+        <h1 id="hero-heading" class="display-title">Report a fault in Ward 42</h1>
+        <p class="lead">Spotted a pothole, a burst pipe or a broken streetlight? Report it in a minute from your phone,
+            with a photo.</p>
+        <div class="actions">
+            <a class="btn btn-primary btn-lg" href="{{url_for('report')}}">Report a Fault</a>
+            <a class="btn btn-outline-primary btn-lg" href="{{url_for('status')}}">Check Status</a>
+        </div>
+    </div>
+</section>
+
+<!-- TUTORIAL VIDEO -->
+<section aria-labelledby="video-heading" class="mb-5">
+    <h2 id="video-heading">How to submit a report</h2>
+    <div class="ratio ratio-16x9">
+        <video controls preload="none">
+            <source src="{{url_for('static', filename='tutorial.mp4')}}" type="video/mp4">
+        </video>
+    </div>
+</section>
+
+<!-- STEPS -->
+<section aria-labelledby="steps-heading">
+    <h2 id="steps-heading">How it works</h2>
+    <ol class="list-unstyled row row-cols-1 row-cols-md-3 g-3">
+        <!--STEP 1-->
+        <li class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="h5 card-title">Step 1: Report</h3>
+                    <p>Choose a category, enter the street, describe the problem and add a photo</p>
+                </div>
+            </div>
+        </li>
+        <!--STEP 2-->
+        <li class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="h5 card-title">Step 2: Keep your reference</h3>
+                    <p>You will receive a reference number once your report is submitted.</p>
+                </div>
+            </div>
+        </li>
+        <!-- STEP 3-->
+        <li class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="h5 card-title">Step 3: Check progress</h3>
+                    <p>Use your reference number to see whether the report is Open, In Progress or Closed.</p>
+                </div>
+            </div>
+        </li>
+    </ol>
+</section>
+{% endblock %}

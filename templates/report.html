@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Report a fault{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <!-- HEADING -->
+        <h1>Report a fault</h1>
+        <p>All fields are required unless marked optional.</p>
+
+        <div id="draft-notice" class="alert alert-info d-none" role="status">
+            <p class="mb-2">We restored a draft you started earlier. Your name and cell number are not saved in a
+                draft, please enter them again </p>
+            <button type="button" id="discard-draft" class="btn btn-sm btn-outline-primary">Discard draft</button>
+        </div>
+        <!-- ERROR SUMMARY -->
+        <div id="form-error-summary" class="alert alert-danger d-none" role="alert"></div>
+
+        <!-- REPORT FORM -->
+        <form id="report-form" method="post" action="{{ url_for('report') }}" enctype="multipart/form-data" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <!-- CATEGORY -->
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category" aria-describedby="category-error" required>
+                    <option value="" selected disabled>Choose a category</option>
+                    {% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+                </select>
+                <div class="invalid-feedback" id="category-error" aria-live="polite"></div>
+            </div>
+
+            <!-- STREET -->
+            <div class="mb-3">
+                <label for="street" class="form-label">Street name</label>
+                <input type="text" class="form-control" id="street" name="street" maxlength="100"
+                    autocomplete="street-address" aria-describedby="street-error" required
+                    placeholder="eg. Long Island Street">
+                <div class="invalid-feedback" id="street-error" aria-live="polite"></div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Short description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" maxlength="500"
+                    aria-describedby="description-help description-error" required
+                    placeholder="Tell us what is wrong and where exactly it is"></textarea>
+                <div id="description-help" class="form-text"> <span id="description-count">0 / 500</span></div>
+                <div class="invalid-feedback" id="description-error" aria-live="polite"></div>
+            </div>
+
+            <!-- PHOTO -->
+            <div class="mb-3">
+                <label for="photo" class="form-label">Photo (optional)</label>
+                <input type="file" class="form-control" id="photo" name="photo" accept="image/jpeg,image/png"
+                    aria-describedby="photo-help photo-error">
+                <div id="photo-help" class="form-text">JPG or PNG, up to 2 MB</div>
+                <div class="invalid-feedback" id="photo-error" aria-live="polite"></div>
+            </div>
+
+            <!-- RESIDENT NAME -->
+            <div class="mb-3">
+                <label for="resident_name" class="form-label">Your name</label>
+                <input type="text" class="form-control" id="resident_name" name="resident_name" maxlength="100"
+                    autocomplete="name" aria-describedby="resident_name-error" required placeholder="eg. Daniel">
+                <div class="invalid-feedback" id="resident_name-error" aria-live="polite"></div>
+            </div>
+
+            <!-- CELL PHONE NUMBER -->
+            <div class="mb-5">
+                <label for="cell" class="form-label">Cell phone number</label>
+                <input type="tel" class="form-control" id="cell" name="cell" inputmode="tel" autocomplete="tel"
+                    pattern="\+?[0-9 ]{10,15}" aria-describedby="cell-help cell-error" required
+                    placeholder="eg. 0821234567">
+            </div>
+            <div class="invalid-feedback" id="cell-error" aria-live="polite"></div>
+
+            <!-- CONSENT -->
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="consent" name="consent" value="yes"
+                    aria-describedby="consent-error" required>
+                <label class="form-check-label" for="consent">
+                    I agree that my name and cell number may be used only to follow up on this report.
+                </label>
+                <div class="invalid-feedback" id="consent-error" aria-live="polite"></div>
+            </div>
+
+            <!-- BUTTON -->
+            <div class="actions">
+                <button type="submit" class="btn btn-primary btn-lg">Submit report</button>
+            </div>
+    </div>
+
+    </form>
+</div>
+</div>
+{% endblock %}

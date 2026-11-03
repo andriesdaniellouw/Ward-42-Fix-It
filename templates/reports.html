@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}All reports{% endblock %}
+
+{% block content %}
+<h1>All reports</h1>
+
+<section aria-labelledby="filter-heading" class="mb-4">
+    <!-- HEADING -->
+    <h2 id="filter-heading" class="h5">Filter reports</h2>
+
+    <!-- FILTER FORM -->
+    <form id="filter-form" method="get" action="{{ url_for('reports') }}" class="row g-3 align-items-end">
+        <!-- CATEGORY -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <label for="f-category" class="form-label">Category</label>
+            <select class="form-select" id="f-category" name="category">
+                <option value="">All categories</option>
+                {% for c in categories %}<option value="{{ c }}" {{ 'selected' if c==selected_category }}>{{ c }}
+                </option>{% endfor %}
+            </select>
+        </div>
+        <!-- STATUS -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <label for="f-status" class="form-label">Status</label>
+            <select class="form-select" id="f-status" name="status">
+                <option value="">All statuses</option>
+                {% for s in statuses %}<option value="{{ s }}" {{ 'selected' if s==selected_status }}>{{ s }}</option>{%
+                endfor %}
+            </select>
+        </div>
+        <div class="col-12 col-md-auto" id="apply-filters">
+            <div class="actions"><button type="submit" class="btn btn-primary">Apply filters</button></div>
+        </div>
+    </form>
+</section>
+
+<!-- FILTER COUNT-->
+<p id="filter-count" class="small" aria-live="polite">Showing {{ reports|length }} of {{ reports|length }} reports.</p>
+
+<!-- REPORTS TABLE -->
+<div class="table-responsive">
+    <table class="table table-striped align-middle" id="reports-table">
+        <caption>Fault reports from residents</caption>
+        <thead>
+            <tr>
+                <th scope="col">Reference</th>
+                <th scope="col">Category</th>
+                <th scope="col">Street</th>
+                <th scope="col">Description</th>
+                <th scope="col">Reported by</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reports %}
+            <th scope="row">{{ r.reference }}</th>
+            <td>{{ r.category }}</td>
+            <td>{{ r.street }}</td>
+            <td>{{ r.description }}</td>
+            <td>{{ r.resident_name }}<br><a href="tel:{{ r.cell|replace(' ', '') }}">{{ r.cell }}</a></td>
+            <td>
+                {% if r.photo %}<a href="{{ url_for('photo', filename=r.photo) }}">View photo<span
+                        class="visually-hidden"> for {{ r.reference }}</span></a>{% else %}None{% endif %}
+            </td>
+            <td>
+                <form method="post" action="{{ url_for('update_status', report_id=r.id) }}" class="d-flex gap-2">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label class="visually-hidden" for="status-{{ r.id }}">Status for report {{ r.reference
+                        }}</label>
+                    <select class="form-select form-select-sm" id="status-{{ r.id }}" name="status">
+                        {% for s in statuses %}<option value="{{ s }}" {{ 'selected' if s==r.status }}>{{ s }}
+                        </option>{% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary">Update<span class="visually-hidden"> {{
+                            r.reference }}</span></button>
+                </form>
+            </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">No reports have been submitted yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

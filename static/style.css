@@ -1,0 +1,74 @@
+/* FONT */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+/* COLORS */
+:root {
+    --blue: #0a57cacc;
+    --blue-dark: #084298;
+}
+
+/* MAIN STYLE */
+html {
+    font-size: 100%;
+}
+
+body {
+    line-height: 1.6;
+    font-family: "Nunito", sans-serif;
+}
+
+a {
+    color: var(--blue);
+}
+
+a:hover {
+    color: var(--blue-dark);
+}
+
+/* BUTTONS STYLE */
+.btn-primary {
+    --bs-btn-bg: var(--blue);
+    --bs-btn-border-color: var(--blue);
+    --bs-btn-hover-bg: var(--blue-dark);
+    --bs-btn-hover-border-color: var(--blue-dark);
+    --bs-btn-active-bg: var(--blue-dark);
+    --bs-btn-active-border-color: var(--blue-dark);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--blue);
+    --bs-btn-border-color: var(--blue);
+    --bs-btn-hover-bg: var(--blue);
+    --bs-btn-hover-border-color: var(--blue);
+    --bs-btn-active-bg: var(--blue-dark);
+    --bs-btn-active-border-color: var(--blue-dark);
+}
+
+/* HEADING SCALING */
+.display-title {
+    font-size: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+    font-weight: 700;
+}
+
+/* BUTTONS ROW */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* PHONE MEDIA */
+@media (max-width:575px) {
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions .btn {
+        width: 100%;
+    }
+
+    main {
+        padding-top: 1rem !important;
+    }
+}
